@@ -1,0 +1,38 @@
+README
+
+the code structure:
+
+./client
+./download
+./rmiregistry
+./server
+./src
+
+java source files are in ./src
+
+1. start web server from ./download
+java -cp . NanoHTTPD -p 8080
+
+2. start rmiregistry from ./rmiregistry
+rmiregistry -J-Djava.rmi.server.codebase=http://localhost:8080/
+or
+rmiregistry -J-Djava.rmi.server.useCodebaseOnly=false
+
+3. start application server from ./server
+specify the web server hostname and port number 
+the server code will register and bind the remote object to rmiregistry
+rmiregistry will try to get interface class from the web server
+
+java -cp . -Djava.rmi.server.codebase=http://localhost:8080/ WarehouseServer
+
+4. start client from ./client
+the client code will lookup remote object from rmiregistry and call the method defined in the interface
+
+java WarehouseClient
+
+
+
+
+
+
+
